@@ -1,0 +1,112 @@
+[
+  {
+    "word": "capable",
+    "translation": "有能力的",
+    "example": "She is capable of doing this.",
+    "exampleZh": "她有能力做这件事。",
+    "distractorsEn": ["unable", "weak"],
+    "distractorsZh": ["无能的", "虚弱的"],
+    "partOfSpeech": "adj.",
+    "phonetic": "/ˈkeɪpəbl/",
+    "extension": "源自拉丁语 capere（抓住、容纳），后缀 -able 表示'能够'，整体即'能够抓住/容纳的'，引申为'有能力的'。"
+  },
+  {
+    "word": "abandon",
+    "translation": "放弃",
+    "example": "He abandoned his plan to travel.",
+    "exampleZh": "他放弃了旅行的计划。",
+    "distractorsEn": ["continue", "maintain"],
+    "distractorsZh": ["继续", "维持"],
+    "partOfSpeech": "v.",
+    "phonetic": "/əˈbændən/",
+    "extension": "a-（去）+ bandon（控制、权力），字面'交出控制权'，引申为'放弃'。"
+  },
+  {
+    "word": "benefit",
+    "translation": "利益",
+    "example": "Exercise benefits our health.",
+    "exampleZh": "运动有益于我们的健康。",
+    "distractorsEn": ["harm", "loss"],
+    "distractorsZh": ["损害", "损失"],
+    "partOfSpeech": "n./v.",
+    "phonetic": "/ˈbenɪfɪt/",
+    "extension": "源自拉丁语 bene（好）+ factum（做），'做好事'，引申为'利益/有益于'。"
+  },
+  {
+    "word": "diminish",
+    "translation": "减少",
+    "example": "His wealth diminished over the years.",
+    "exampleZh": "这些年来他的财富减少了。",
+    "distractorsEn": ["increase", "expand"],
+    "distractorsZh": ["增加", "扩大"],
+    "partOfSpeech": "v.",
+    "phonetic": "/dɪˈmɪnɪʃ/",
+    "extension": "di-（分离）+ mini（小）+ -ish（使动后缀），'使变小'，即'减少'。"
+  },
+  {
+    "word": "essential",
+    "translation": "必要的",
+    "example": "Water is essential for all life.",
+    "exampleZh": "水对所有生命都是必要的。",
+    "distractorsEn": ["optional", "trivial"],
+    "distractorsZh": ["可选的", "琐碎的"],
+    "partOfSpeech": "adj./n.",
+    "phonetic": "/ɪˈsenʃl/",
+    "extension": "源自 essence（本质），-ial 形容词后缀，'本质的'，引申为'必要的'。"
+  },
+  {
+    "word": "fortunate",
+    "translation": "幸运的",
+    "example": "He was fortunate to win the prize.",
+    "exampleZh": "他很幸运赢得了奖品。",
+    "distractorsEn": ["unlucky", "miserable"],
+    "distractorsZh": ["不幸的", "痛苦的"],
+    "partOfSpeech": "adj.",
+    "phonetic": "/ˈfɔːtʃənət/",
+    "extension": "源自拉丁语 fortuna（命运、运气），'被命运眷顾的'，即'幸运的'。"
+  },
+  {
+    "word": "hesitate",
+    "translation": "犹豫",
+    "example": "Don't hesitate to ask for help.",
+    "exampleZh": "不要犹豫，去寻求帮助。",
+    "distractorsEn": ["decide", "proceed"],
+    "distractorsZh": ["决定", "前进"],
+    "partOfSpeech": "v.",
+    "phonetic": "/ˈhezɪteɪt/",
+    "extension": "源自拉丁语 haerere（粘住），'像被粘住一样无法前进'，即'犹豫'。"
+  },
+  {
+    "word": "genuine",
+    "translation": "真正的",
+    "example": "This is a genuine diamond ring.",
+    "exampleZh": "这是一枚真正的钻石戒指。",
+    "distractorsEn": ["fake", "ordinary"],
+    "distractorsZh": ["虚假的", "普通的"],
+    "partOfSpeech": "adj.",
+    "phonetic": "/ˈdʒenjuɪn/",
+    "extension": "源自拉丁语 genu（膝盖），古罗马父亲将新生儿放在膝上表示'亲生'，引申为'真正的'。"
+  },
+  {
+    "word": "obtain",
+    "translation": "获得",
+    "example": "He obtained a degree in math.",
+    "exampleZh": "他获得了数学学位。",
+    "distractorsEn": ["lose", "return"],
+    "distractorsZh": ["失去", "归还"],
+    "partOfSpeech": "v.",
+    "phonetic": "/əbˈteɪn/",
+    "extension": "ob-（对着）+ tain（握住），'握在手中'，即'获得'。"
+  },
+  {
+    "word": "persist",
+    "translation": "坚持",
+    "example": "She persisted in her studies.",
+    "exampleZh": "她坚持学习。",
+    "distractorsEn": ["quit", "change"],
+    "distractorsZh": ["放弃", "改变"],
+    "partOfSpeech": "v.",
+    "phonetic": "/pəˈsɪst/",
+    "extension": "per-（始终）+ sist（站立），'始终站着不倒'，即'坚持'。"
+  }
+]

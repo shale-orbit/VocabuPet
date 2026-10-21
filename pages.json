@@ -1,0 +1,59 @@
+{
+	"pages": [
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "主页"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "学习"
+			}
+		},
+		{
+			"path": "pages/points/points",
+			"style": {
+				"navigationBarTitleText": "积分/扭蛋"
+			}
+		},
+		{
+			"path": "pages/egg/egg",
+			"style": {
+				"navigationBarTitleText": "孵化"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "单词宠物",
+		"navigationBarBackgroundColor": "#FFF9E6",
+		"backgroundColor": "#FFF9E6"
+	},
+	"tabBar": {
+		"color": "#555",
+		"selectedColor": "#FF6B9D",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/home/home",
+				"text": "主页"
+			},
+			{
+				"pagePath": "pages/index/index",
+				"text": "学习"
+			},
+			{
+				"pagePath": "pages/points/points",
+				"text": "扭蛋"
+			},
+			{
+				"pagePath": "pages/egg/egg",
+				"text": "孵化"
+			}
+		]
+	},
+	"uniIdRouter": {}
+}
