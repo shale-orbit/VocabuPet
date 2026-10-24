@@ -10,20 +10,32 @@
 					uni.setStorageSync(key, value);
 				}
 			};
-			ensure('points', 25);
-			ensure('food', 5);
-			ensure('coins', 0);
-			ensure('animals', [
-				{ name: '小松鼠', emoji: '🐿️', stage: '青年', growth: 0, lastFeedTime: Date.now(), status: 'normal' }
+			// 路演演示专属版：每次启动强制覆盖演示数据
+			// 1. 资源数据
+			uni.setStorageSync('points', 200);
+			uni.setStorageSync('coins', 50);
+			uni.setStorageSync('food', 150);
+			uni.setStorageSync('potions', 5);
+			uni.setStorageSync('magicPotions', 5);
+			// 2. 动物列表（含正常/生病/休眠三种状态 + nickname + source 字段）
+			uni.setStorageSync('animals', [
+				// 动物1：高级-正常
+				{ name: '小狐狸', nickname: '小狐狸', emoji: '🦊', stage: '成年', growth: 0, status: 'normal', source: '高级', lastFeedTime: Date.now() },
+				// 动物2：初级-生病（lastFeedTime 2 天前，符合生病逻辑）
+				{ name: '小鸡', nickname: '小鸡', emoji: '🐤', stage: '幼年', growth: 0, status: 'sick', source: '初级', lastFeedTime: Date.now() - 2 * 24 * 3600 * 1000 },
+				// 动物3：中级-休眠（lastFeedTime 4 天前，符合休眠逻辑）
+				{ name: '小猫', nickname: '小猫', emoji: '🐱', stage: '青年', growth: 0, status: 'sleep', source: '中级', lastFeedTime: Date.now() - 4 * 24 * 3600 * 1000 }
 			]);
-			ensure('currentEgg', { name: '未知的蛋', progress: 0 });
-			// v3 新增 key
+			// 3. 孵化队列：放入一枚特级蛋
+			uni.setStorageSync('eggsList', [
+				{ id: 9999, name: '未知的蛋', level: '特级', animalName: '大老虎', emoji: '🐯', progress: 10, source: '特级' }
+			]);
+			// 4. 激活的蛋 ID：指向上面那枚特级蛋
+			uni.setStorageSync('activeEggId', 9999);
+			// 其余 key 保留 ensure（不每次覆盖）
 			ensure('streak', 1);
-			ensure('currentLibrary', 'CET-4 核心词');
+			ensure('currentLibrary', 'CET-4');
 			ensure('myWords', []);
-			// v4 新增道具 key
-			ensure('potions', 0);
-			ensure('magicPotions', 0);
 
 			// 版本迁移
 			const ver = uni.getStorageSync('appVersion');

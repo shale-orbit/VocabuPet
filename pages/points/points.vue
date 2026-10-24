@@ -94,10 +94,10 @@
 		<view class="modal-mask" :class="{ show: showResult }" @click="closeResult">
 			<view class="mbe-card result-modal" @click.stop="">
 				<text class="result-egg">🥚</text>
-				<text class="result-title">🎉 恭喜获得一枚</text>
+				<text class="result-title">🎉 恭喜获得</text>
 				<text class="result-level-tag">[{{ resultLevel }}]</text>
-				<text class="result-title2">神秘的蛋！</text>
-				<text class="result-tip">请去孵化页查看吧~</text>
+				<text class="result-title2">神秘的蛋</text>
+				<text class="result-tip">已加入孵化队列！</text>
 				<view class="mbe-btn confirm-btn" @click="closeResult">
 					<text class="btn-text">确定</text>
 				</view>
@@ -213,14 +213,24 @@
 				uni.setStorageSync('coins', this.coins);
 
 				const pick = m.pool[Math.floor(Math.random() * m.pool.length)];
+				const level = m.label.replace('扭蛋机', '');
 				const newEgg = {
+					id: Date.now(),
 					name: '未知的蛋',
-					level: m.label.replace('扭蛋机', ''),
+					level: level,
+					source: level,
 					animalName: pick.name,
 					emoji: pick.emoji,
 					progress: 0
 				};
-				uni.setStorageSync('currentEgg', newEgg);
+				const eggsList = uni.getStorageSync('eggsList') || [];
+				eggsList.push(newEgg);
+				uni.setStorageSync('eggsList', eggsList);
+				// 如果当前没有激活的蛋，默认设为新蛋
+				const activeId = uni.getStorageSync('activeEggId');
+				if (!activeId) {
+					uni.setStorageSync('activeEggId', newEgg.id);
+				}
 
 				this.resultLevel = newEgg.level;
 				this.showResult = true;

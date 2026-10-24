@@ -9,7 +9,7 @@
 				<text class="book-icon">📖</text>
 			</view>
 		</view>
-		<text class="library-text">📚 当前词库：{{ currentLibrary }}</text>
+		<text class="library-text">📚 当前词库：{{ currentLibraryName }}</text>
 
 		<!-- 模式切换开关 -->
 		<view class="mode-switch">
@@ -144,15 +144,20 @@
 			<!-- 可选词库 -->
 			<view class="vocab-section">
 				<text class="section-title">📚 可选词库</text>
-				<view class="library-list">
+				<view class="library-buttons">
 					<view
-						v-for="lib in libraries"
-						:key="lib"
-						class="mbe-btn library-item"
-						:class="{ 'library-active': currentLibrary === lib }"
-						@click="switchLibrary(lib)"
+						class="lib-btn"
+						:class="{ 'lib-active': currentLibrary === 'CET-4' }"
+						@click="switchLibrary('CET-4')"
 					>
-						<text class="btn-text">{{ lib }}</text>
+						<text>CET-4 核心词</text>
+					</view>
+					<view
+						class="lib-btn"
+						:class="{ 'lib-active': currentLibrary === 'CET-6' }"
+						@click="switchLibrary('CET-6')"
+					>
+						<text>CET-6 核心词</text>
 					</view>
 				</view>
 			</view>
@@ -161,15 +166,25 @@
 </template>
 
 <script>
-	import wordsData from '@/static/words_cet4.json';
+	import cet4Data from '@/static/cet4.json';
+	import cet6Data from '@/static/cet6.json';
+
+	const LIBRARY_DATA = {
+		'CET-4': cet4Data,
+		'CET-6': cet6Data
+	};
 
 	export default {
 		data() {
 			return {
-				words: wordsData,
+				words: cet4Data,
 				points: 0,
 				streak: 1,
-				currentLibrary: '',
+				currentLibrary: 'CET-4',
+				libraries: [
+					{ name: 'CET-4 核心词', key: 'CET-4' },
+					{ name: 'CET-6 核心词', key: 'CET-6' }
+				],
 				quizMode: 'en2zh',
 				currentIndex: 0,
 				shuffledOptions: [],
@@ -192,6 +207,10 @@
 			questionText() {
 				if (!this.current || !this.current.word) return '';
 				return this.quizMode === 'en2zh' ? this.current.word : this.current.translation;
+			},
+			currentLibraryName() {
+				const lib = this.libraries.find(l => l.key === this.currentLibrary);
+				return lib ? lib.name : 'CET-4 核心词';
 			}
 		},
 		onLoad() {
@@ -214,7 +233,15 @@
 			loadState() {
 				this.points = uni.getStorageSync('points') || 0;
 				this.streak = uni.getStorageSync('streak') || 1;
-				this.currentLibrary = uni.getStorageSync('currentLibrary') || 'CET-4 核心词';
+				// 读取词库设置，迁移旧值
+				let stored = uni.getStorageSync('currentLibrary');
+				if (stored === 'CET-6' || stored === 'CET-6 核心词') {
+					this.currentLibrary = 'CET-6';
+				} else {
+					this.currentLibrary = 'CET-4';
+				}
+				// 动态加载对应词库数据
+				this.words = LIBRARY_DATA[this.currentLibrary] || LIBRARY_DATA['CET-4'];
 				const mw = uni.getStorageSync('myWords');
 				this.myWords = Array.isArray(mw) ? mw : [];
 			},
@@ -272,13 +299,17 @@
 					this.points += 1;
 					uni.setStorageSync('points', this.points);
 
-					// 同步推进孵化进度（按蛋等级动态加成，跨页面一致）
-					const e = uni.getStorageSync('currentEgg');
-					if (e && typeof e === 'object' && e.progress < 100) {
-						const levelMap = { '初级': 10, '中级': 5, '高级': 3, '特级': 1 };
-						const inc = levelMap[e.level] || 10;
-						e.progress = Math.min(100, (e.progress || 0) + inc);
-						uni.setStorageSync('currentEgg', e);
+					// 只有被激活的蛋才增加进度
+					const eggs = uni.getStorageSync('eggsList');
+					const activeId = uni.getStorageSync('activeEggId');
+					if (Array.isArray(eggs) && eggs.length > 0 && activeId) {
+						const incMap = { '初级': 10, '中级': 5, '高级': 3, '特级': 1 };
+						const egg = eggs.find(e => e.id === activeId);
+						if (egg && egg.progress < 100) {
+							const inc = incMap[egg.level] || 10;
+							egg.progress = Math.min(100, (egg.progress || 0) + inc);
+							uni.setStorageSync('eggsList', eggs);
+						}
 					}
 					// 已取消自动跳转，等待用户手动点击「下一个」
 				}
@@ -348,11 +379,17 @@
 				this.searchResult = { notFound: true };
 			},
 			// 切换词库（仅 UI，暂不实现复杂换库逻辑）
-			switchLibrary(lib) {
-				if (this.currentLibrary === lib) return;
-				this.currentLibrary = lib;
-				uni.setStorageSync('currentLibrary', lib);
-				uni.showToast({ title: `已切换至${lib}`, icon: 'none' });
+			switchLibrary(libKey) {
+				if (this.currentLibrary === libKey) return;
+				this.currentLibrary = libKey;
+				uni.setStorageSync('currentLibrary', libKey);
+				this.words = LIBRARY_DATA[libKey];
+				this.currentIndex = 0;
+				this.resetAnswer();
+				this.regenerateOptions();
+				this.showVocab = false;
+				const toastMsg = libKey === 'CET-4' ? '已切换至四级词库' : '已切换至六级词库';
+				uni.showToast({ title: toastMsg, icon: 'none' });
 			}
 		}
 	};
@@ -732,27 +769,29 @@
 		font-weight: 800;
 	}
 
-	/* 可选词库列表 */
-	.library-list {
+	/* 可选词库列表 — 硬编码按钮 */
+	.library-buttons {
 		display: flex;
 		flex-direction: column;
 		gap: 16rpx;
 	}
-	.library-item {
-		background: #FFFFFF;
-		padding: 26rpx 0;
-	}
-	.library-item.library-active {
-		background: #FF6B9D;
-		box-shadow: 8rpx 8rpx 0 #333, inset 0 0 0 4rpx #FFD93D;
-	}
-	.library-item .btn-text {
+	.lib-btn {
+		background: #F5F5F5;
 		color: #333;
+		border: 4rpx solid #333;
+		border-radius: 16rpx;
+		padding: 26rpx 0;
+		text-align: center;
 		font-size: 30rpx;
 		font-weight: 800;
+		box-shadow: 4rpx 4rpx 0 #333;
 	}
-	.library-item.library-active .btn-text {
-		color: #FFF;
-		text-shadow: 2rpx 2rpx 0 #333;
+	.lib-btn:active {
+		transform: translate(2rpx, 2rpx);
+		box-shadow: 2rpx 2rpx 0 #333;
+	}
+	.lib-btn.lib-active {
+		background: #FFD93D;
+		border: 6rpx solid #333;
 	}
 </style>

@@ -81,10 +81,13 @@
 				food: 0,
 				coins: 0,
 				animals: [],
-				currentEgg: { name: '未知的蛋', progress: 0 }
+				eggsList: []
 			};
 		},
 		computed: {
+			currentEgg() {
+				return this.eggsList[0] || { name: '未知的蛋', progress: 0 };
+			},
 			eggEmoji() {
 				return this.currentEgg.progress >= 100 ? '✨🥚✨' : '🥚';
 			}
@@ -99,17 +102,19 @@
 				this.coins = uni.getStorageSync('coins') || 0;
 				const a = uni.getStorageSync('animals');
 				this.animals = Array.isArray(a) ? a : [];
-				const e = uni.getStorageSync('currentEgg');
-				this.currentEgg = (e && typeof e === 'object') ? e : { name: '未知的蛋', progress: 0 };
+				const eggs = uni.getStorageSync('eggsList');
+				this.eggsList = Array.isArray(eggs) ? eggs : [];
 			},
 			stageClass(stage) {
 				return 'stage-' + stage;
 			},
 			hatch() {
+				if (this.eggsList.length === 0) return;
+				const egg = this.eggsList[0];
 				let animalName, emoji;
-				if (this.currentEgg.animalName && this.currentEgg.emoji) {
-					animalName = this.currentEgg.animalName;
-					emoji = this.currentEgg.emoji;
+				if (egg.animalName && egg.emoji) {
+					animalName = egg.animalName;
+					emoji = egg.emoji;
 				} else {
 					const pick = FALLBACK_POOL[Math.floor(Math.random() * FALLBACK_POOL.length)];
 					animalName = pick.name;
@@ -123,8 +128,8 @@
 				};
 				this.animals.push(newAnimal);
 				uni.setStorageSync('animals', this.animals);
-				this.currentEgg = { name: '未知的蛋', progress: 0 };
-				uni.setStorageSync('currentEgg', this.currentEgg);
+				this.eggsList.splice(0, 1);
+				uni.setStorageSync('eggsList', this.eggsList);
 
 				uni.showModal({
 					title: '🎉 破壳成功！',
