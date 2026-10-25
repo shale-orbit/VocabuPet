@@ -1,0 +1,72 @@
+[
+  {
+    "word": "abandon",
+    "options": ["放弃", "吸收", "成就", "前进"],
+    "answerIndex": 0,
+    "example": "He abandoned his plan to travel abroad.",
+    "translation": "他放弃了出国旅行的计划。"
+  },
+  {
+    "word": "benefit",
+    "options": ["损害", "利益", "成本", "负担"],
+    "answerIndex": 1,
+    "example": "Regular exercise benefits our health.",
+    "translation": "规律的运动有益于我们的健康。"
+  },
+  {
+    "word": "capable",
+    "options": ["无能的", "有能力的", "可能的", "容易的"],
+    "answerIndex": 1,
+    "example": "She is capable of solving this problem.",
+    "translation": "她有能力解决这个问题。"
+  },
+  {
+    "word": "diminish",
+    "options": ["增加", "扩大", "减少", "保留"],
+    "answerIndex": 2,
+    "example": "His wealth diminished over the years.",
+    "translation": "这些年来他的财富减少了。"
+  },
+  {
+    "word": "essential",
+    "options": ["次要的", "必要的", "可选的", "无关的"],
+    "answerIndex": 1,
+    "example": "Water is essential for all living things.",
+    "translation": "水对所有生物都是必不可少的。"
+  },
+  {
+    "word": "fortunate",
+    "options": ["不幸的", "痛苦的", "幸运的", "悲伤的"],
+    "answerIndex": 2,
+    "example": "He was fortunate to win the prize.",
+    "translation": "他很幸运赢得了奖品。"
+  },
+  {
+    "word": "hesitate",
+    "options": ["犹豫", "决定", "前进", "同意"],
+    "answerIndex": 0,
+    "example": "Don't hesitate to ask for help.",
+    "translation": "不要犹豫，去寻求帮助。"
+  },
+  {
+    "word": "genuine",
+    "options": ["虚假的", "普通的", "真正的", "复杂的"],
+    "answerIndex": 2,
+    "example": "This is a genuine diamond ring.",
+    "translation": "这是一枚真正的钻石戒指。"
+  },
+  {
+    "word": "obtain",
+    "options": ["失去", "获得", "拒绝", "归还"],
+    "answerIndex": 1,
+    "example": "He obtained a degree in mathematics.",
+    "translation": "他获得了数学学位。"
+  },
+  {
+    "word": "persist",
+    "options": ["放弃", "坚持", "忘记", "改变"],
+    "answerIndex": 1,
+    "example": "She persisted in her studies despite difficulties.",
+    "translation": "尽管困难重重，她仍坚持学习。"
+  }
+]
