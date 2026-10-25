@@ -98,11 +98,17 @@
 				>
 					<view class="house-visual" :class="{ 'bounce-anim': i === bounceIndex }">
 						<text class="house-structure">{{ houseEmoji(a) }}</text>
-						<text class="house-animal" :class="stageScaleClass(a)">{{ a.emoji }}</text>
-						<text v-if="a.stage === '幼年'" class="house-acc acc-milk">🍼</text>
-						<text v-else-if="a.stage === '青年'" class="house-acc acc-scarf">🧣</text>
-						<text v-else-if="a.stage === '成年'" class="house-acc acc-glasses">🕶️</text>
-						<text v-else-if="a.stage === '老年'" class="house-acc acc-cane">🦯</text>
+						<!-- 图片系角色：奶蛙 -->
+						<image v-if="a.isSpecialImage" class="house-animal-image" :src="getAnimalImage(a)" mode="aspectFit" />
+						<!-- Emoji 型动物：保留缩放 + 阶段配件 -->
+						<template v-else>
+							<text class="house-animal" :class="stageScaleClass(a)">{{ a.emoji }}</text>
+							<text v-if="a.stage === '幼年'" class="house-acc acc-milk">🍼</text>
+							<text v-else-if="a.stage === '青年'" class="house-acc acc-scarf">🧣</text>
+							<text v-else-if="a.stage === '成年'" class="house-acc acc-glasses">🕶️</text>
+							<text v-else-if="a.stage === '老年'" class="house-acc acc-cane">🦯</text>
+						</template>
+						<!-- 状态图标叠加：图片 / Emoji 都保留 -->
 						<text v-if="a.status === 'sick'" class="status-icon">🤒</text>
 						<text v-else-if="a.status === 'sleep'" class="status-icon">💤</text>
 					</view>
@@ -123,11 +129,14 @@
 					<text class="close-text">×</text>
 				</view>
 				<view class="modal-emoji-wrap">
-					<text class="modal-animal-emoji" :class="stageScaleClass(currentAnimal)">{{ currentAnimal.emoji }}</text>
-					<text v-if="currentAnimal.stage === '幼年'" class="modal-acc acc-milk">🍼</text>
-					<text v-else-if="currentAnimal.stage === '青年'" class="modal-acc acc-scarf">🧣</text>
-					<text v-else-if="currentAnimal.stage === '成年'" class="modal-acc acc-glasses">🕶️</text>
-					<text v-else-if="currentAnimal.stage === '老年'" class="modal-acc acc-cane">🦯</text>
+					<image v-if="currentAnimal.isSpecialImage" class="modal-animal-image" :src="getAnimalImage(currentAnimal)" mode="aspectFit" />
+					<template v-else>
+						<text class="modal-animal-emoji" :class="stageScaleClass(currentAnimal)">{{ currentAnimal.emoji }}</text>
+						<text v-if="currentAnimal.stage === '幼年'" class="modal-acc acc-milk">🍼</text>
+						<text v-else-if="currentAnimal.stage === '青年'" class="modal-acc acc-scarf">🧣</text>
+						<text v-else-if="currentAnimal.stage === '成年'" class="modal-acc acc-glasses">🕶️</text>
+						<text v-else-if="currentAnimal.stage === '老年'" class="modal-acc acc-cane">🦯</text>
+					</template>
 					<text v-if="currentAnimal.status === 'sick'" class="status-icon">🤒</text>
 					<text v-else-if="currentAnimal.status === 'sleep'" class="status-icon">💤</text>
 				</view>
@@ -311,6 +320,14 @@
 				if (s === '老年') return 'stage-old';
 				return '';
 			},
+			// 图片系角色：按阶段返回对应图片地址
+			getAnimalImage(a) {
+				if (!a || !a.isSpecialImage || !a.images || a.images.length === 0) return '';
+				const stageMap = { '幼年': 0, '青年': 1, '成年': 2, '老年': 3 };
+				const idx = stageMap[a.stage];
+				if (typeof idx !== 'number' || idx >= a.images.length) return a.images[0];
+				return a.images[idx];
+			},
 			statusText(s) {
 				if (s === 'sick') return '生病';
 				if (s === 'sleep') return '休眠';
@@ -384,7 +401,10 @@
 						growth: 0,
 						lastFeedTime: Date.now(),
 						status: 'normal',
-						source: (egg && egg.source) || '初级'
+						source: (egg && egg.source) || '初级',
+						// 图片系角色：蛋里的 images + isSpecialImage 一并流转给动物
+						isSpecialImage: !!(egg && egg.isSpecialImage),
+						images: (egg && egg.images) ? egg.images.slice() : null
 					};
 					this.animals.push(newAnimal);
 					uni.setStorageSync('animals', this.animals);
@@ -434,6 +454,16 @@
 					msg = '我好像生病了，主人能给我用药水吗？';
 				} else if (animal.status === 'sleep') {
 					msg = 'Zzz... 我还在睡觉哦...';
+				} else if (animal.name === '奶蛙') {
+					// 奶蛙专属魔性语录
+					const naibaTips = [
+						'今天你背单词了吗？没背我可要生气了哦！',
+						'你看我这清澈的眼神，像不像你还没记住的abandon？',
+						'别摸鱼了，快带我去背单词！',
+						'只要你背单词，我就是你最忠实的胖胖！',
+						'我这大肚子里面装的都是知识，你信吗？'
+					];
+					msg = naibaTips[Math.floor(Math.random() * naibaTips.length)];
 				} else {
 					const tips = ['今天背单词了吗？', '坚持就是胜利！', '主人，加油哦！', '一起变强吧！'];
 					msg = tips[Math.floor(Math.random() * tips.length)];
@@ -829,13 +859,23 @@
 		z-index: 1;
 		filter: drop-shadow(4rpx 4rpx 0 #333);
 	}
-	.house-animal {
-		font-size: 88rpx;
-		position: absolute;
-		z-index: 2;
-		bottom: 24rpx;
-		filter: drop-shadow(2rpx 2rpx 0 #333);
-	}
+		.house-animal {
+			font-size: 88rpx;
+			position: absolute;
+			z-index: 2;
+			bottom: 24rpx;
+			filter: drop-shadow(2rpx 2rpx 0 #333);
+		}
+		/* 图片系动物（奶蛙）：固定 160rpx，object-fit: contain */
+		.house-animal-image {
+			width: 160rpx;
+			height: 160rpx;
+			position: absolute;
+			z-index: 2;
+			bottom: 24rpx;
+			object-fit: contain;
+			filter: drop-shadow(2rpx 2rpx 0 #333);
+		}
 	/* 阶段缩放 */
 	.stage-young .house-animal { transform: scale(0.7); }
 	.stage-teen .house-animal { transform: scale(1.0); }
@@ -991,10 +1031,17 @@
 		align-items: center;
 		margin-bottom: 10rpx;
 	}
-	.modal-animal-emoji {
-		font-size: 130rpx;
-		filter: drop-shadow(4rpx 4rpx 0 #333);
-	}
+		.modal-animal-emoji {
+			font-size: 130rpx;
+			filter: drop-shadow(4rpx 4rpx 0 #333);
+		}
+		/* 图片系动物模态框：固定 160rpx */
+		.modal-animal-image {
+			width: 160rpx;
+			height: 160rpx;
+			object-fit: contain;
+			filter: drop-shadow(4rpx 4rpx 0 #333);
+		}
 	/* 模态框阶段缩放 */
 	.stage-young .modal-animal-emoji { transform: scale(0.7); }
 	.stage-teen .modal-animal-emoji { transform: scale(1.0); }

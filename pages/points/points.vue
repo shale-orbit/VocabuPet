@@ -96,7 +96,7 @@
 				<text class="result-egg">🥚</text>
 				<text class="result-title">🎉 恭喜获得</text>
 				<text class="result-level-tag">[{{ resultLevel }}]</text>
-				<text class="result-title2">神秘的蛋</text>
+				<text class="result-title2">{{ resultTitle2 }}</text>
 				<text class="result-tip">已加入孵化队列！</text>
 				<view class="mbe-btn confirm-btn" @click="closeResult">
 					<text class="btn-text">确定</text>
@@ -139,7 +139,20 @@
 			label: '特级扭蛋机',
 			cost: 50,
 			isMystery: true,
-			pool: []
+			// 专属图片系隐藏角色：奶蛙
+			pool: [
+				{
+					name: '奶蛙',
+					emoji: '👽',
+					isSpecialImage: true,
+					images: [
+						'/static/images/naiba_1.png', // 幼年
+						'/static/images/naiba_2.png', // 青年
+						'/static/images/naiba_3.png', // 成年
+						'/static/images/naiba_4.png'  // 老年
+					]
+				}
+			]
 		}
 	};
 
@@ -154,7 +167,8 @@
 					machines: MACHINES,
 					showExchange: false,
 					showResult: false,
-					resultLevel: '初级'
+					resultLevel: '初级',
+					resultTitle2: '神秘的蛋'
 				};
 			},
 			onShow() {
@@ -205,7 +219,7 @@
 					uni.showToast({ title: '游戏币不足', icon: 'none' });
 					return;
 				}
-				if (m.isMystery) {
+				if (!m.pool || m.pool.length === 0) {
 					uni.showToast({ title: '神秘大奖，敬请期待！', icon: 'none' });
 					return;
 				}
@@ -221,7 +235,10 @@
 					source: level,
 					animalName: pick.name,
 					emoji: pick.emoji,
-					progress: 0
+					progress: 0,
+					// 图片系角色：带上 isSpecialImage + images
+					isSpecialImage: !!pick.isSpecialImage,
+					images: pick.images || null
 				};
 				const eggsList = uni.getStorageSync('eggsList') || [];
 				eggsList.push(newEgg);
@@ -233,6 +250,8 @@
 				}
 
 				this.resultLevel = newEgg.level;
+				// 图片系特殊角色显示专属标题
+				this.resultTitle2 = newEgg.isSpecialImage ? `魔性${pick.name}蛋` : '神秘的蛋';
 				this.showResult = true;
 			},
 			closeResult() {

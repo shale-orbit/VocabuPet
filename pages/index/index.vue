@@ -1,9 +1,13 @@
 <template>
 	<view class="mbe-page">
-		<!-- 顶部：左积分卡 + 右书本按钮 -->
+		<!-- 顶部：左积分卡 + 中复习按钮 + 右书本按钮 -->
 		<view class="top-bar">
 			<view class="mbe-card points-card">
 				<text class="points-text">✨ 今日积分：{{ points }}</text>
+			</view>
+			<view class="mbe-btn review-btn" @click="openReview">
+				<text class="book-icon">📚</text>
+				<text v-if="wrongCount > 0" class="red-dot">{{ wrongCount }}</text>
 			</view>
 			<view class="mbe-btn book-btn" @click="openVocab">
 				<text class="book-icon">📖</text>
@@ -159,6 +163,13 @@
 					>
 						<text>CET-6 核心词</text>
 					</view>
+					<view
+						class="lib-btn"
+						:class="{ 'lib-active': currentLibrary === 'IELTS' }"
+						@click="switchLibrary('IELTS')"
+					>
+						<text>雅思核心词</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -168,10 +179,12 @@
 <script>
 	import cet4Data from '@/static/cet4.json';
 	import cet6Data from '@/static/cet6.json';
+	import ieltsData from '@/static/ielts.json';
 
 	const LIBRARY_DATA = {
 		'CET-4': cet4Data,
-		'CET-6': cet6Data
+		'CET-6': cet6Data,
+		'IELTS': ieltsData
 	};
 
 	export default {
@@ -183,7 +196,8 @@
 				currentLibrary: 'CET-4',
 				libraries: [
 					{ name: 'CET-4 核心词', key: 'CET-4' },
-					{ name: 'CET-6 核心词', key: 'CET-6' }
+					{ name: 'CET-6 核心词', key: 'CET-6' },
+					{ name: '雅思核心词', key: 'IELTS' }
 				],
 				quizMode: 'en2zh',
 				currentIndex: 0,
@@ -197,6 +211,7 @@
 				searchResult: null,
 				libraries: ['CET-4 核心词', '考研高频词', '校园生活词汇'],
 				myWords: [],
+				wrongCount: 0,
 				audioCtx: null
 			};
 		},
@@ -234,8 +249,10 @@
 				this.points = uni.getStorageSync('points') || 0;
 				this.streak = uni.getStorageSync('streak') || 1;
 				// 读取词库设置，迁移旧值
-				let stored = uni.getStorageSync('currentLibrary');
-				if (stored === 'CET-6' || stored === 'CET-6 核心词') {
+				const stored = uni.getStorageSync('currentLibrary');
+				if (stored === 'IELTS' || stored === '雅思核心词') {
+					this.currentLibrary = 'IELTS';
+				} else if (stored === 'CET-6' || stored === 'CET-6 核心词') {
 					this.currentLibrary = 'CET-6';
 				} else {
 					this.currentLibrary = 'CET-4';
@@ -244,6 +261,8 @@
 				this.words = LIBRARY_DATA[this.currentLibrary] || LIBRARY_DATA['CET-4'];
 				const mw = uni.getStorageSync('myWords');
 				this.myWords = Array.isArray(mw) ? mw : [];
+				const ww = uni.getStorageSync('wrongWords');
+				this.wrongCount = Array.isArray(ww) ? ww.length : 0;
 			},
 			regenerateOptions() {
 				if (!this.current || !this.current.word) {
@@ -312,8 +331,23 @@
 						}
 					}
 					// 已取消自动跳转，等待用户手动点击「下一个」
+				} else {
+					// 答错：把当前单词完整对象存入 wrongWords（去重）
+					if (this.current && this.current.word) {
+						const ww = uni.getStorageSync('wrongWords');
+						const arr = Array.isArray(ww) ? ww : [];
+						if (!arr.some(w => w.word === this.current.word)) {
+							arr.push({ ...this.current });
+							uni.setStorageSync('wrongWords', arr);
+							this.wrongCount = arr.length;
+						}
+					}
 				}
 				// 答错同样停留，等待用户手动操作
+			},
+			// 跳转到复习页
+			openReview() {
+				uni.navigateTo({ url: '/pages/review/review' });
 			},
 			// 上一个：回到上一题并重置作答状态
 			goPrev() {
@@ -378,17 +412,19 @@
 				}
 				this.searchResult = { notFound: true };
 			},
-			// 切换词库（仅 UI，暂不实现复杂换库逻辑）
+			// 切换词库：动态加载对应题库，重置进度与答题状态
 			switchLibrary(libKey) {
 				if (this.currentLibrary === libKey) return;
 				this.currentLibrary = libKey;
 				uni.setStorageSync('currentLibrary', libKey);
 				this.words = LIBRARY_DATA[libKey];
 				this.currentIndex = 0;
+				this.destroyAudio();
 				this.resetAnswer();
 				this.regenerateOptions();
 				this.showVocab = false;
-				const toastMsg = libKey === 'CET-4' ? '已切换至四级词库' : '已切换至六级词库';
+				const lib = this.libraries.find(l => l.key === libKey);
+				const toastMsg = lib ? `已切换至${lib.name}` : '已切换词库';
 				uni.showToast({ title: toastMsg, icon: 'none' });
 			}
 		}
@@ -416,6 +452,30 @@
 	.book-btn {
 		background: #4ECDC4;
 		padding: 18rpx 30rpx;
+	}
+	.review-btn {
+		background: #FFB5D8;
+		padding: 18rpx 30rpx;
+		position: relative;
+	}
+	.red-dot {
+		position: absolute;
+		top: -10rpx;
+		right: -10rpx;
+		min-width: 36rpx;
+		height: 36rpx;
+		padding: 0 8rpx;
+		background: #FF5252;
+		color: #FFF;
+		font-size: 22rpx;
+		font-weight: 900;
+		border: 3rpx solid #333;
+		border-radius: 18rpx;
+		box-shadow: 3rpx 3rpx 0 #333;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		line-height: 1;
 	}
 	.book-icon {
 		font-size: 44rpx;

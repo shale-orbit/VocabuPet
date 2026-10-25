@@ -13,7 +13,7 @@
 			// 路演演示专属版：每次启动强制覆盖演示数据
 			// 1. 资源数据
 			uni.setStorageSync('points', 200);
-			uni.setStorageSync('coins', 50);
+			uni.setStorageSync('coins', 100);
 			uni.setStorageSync('food', 150);
 			uni.setStorageSync('potions', 5);
 			uni.setStorageSync('magicPotions', 5);
@@ -24,7 +24,25 @@
 				// 动物2：初级-生病（lastFeedTime 2 天前，符合生病逻辑）
 				{ name: '小鸡', nickname: '小鸡', emoji: '🐤', stage: '幼年', growth: 0, status: 'sick', source: '初级', lastFeedTime: Date.now() - 2 * 24 * 3600 * 1000 },
 				// 动物3：中级-休眠（lastFeedTime 4 天前，符合休眠逻辑）
-				{ name: '小猫', nickname: '小猫', emoji: '🐱', stage: '青年', growth: 0, status: 'sleep', source: '中级', lastFeedTime: Date.now() - 4 * 24 * 3600 * 1000 }
+				{ name: '小猫', nickname: '小猫', emoji: '🐱', stage: '青年', growth: 0, status: 'sleep', source: '中级', lastFeedTime: Date.now() - 4 * 24 * 3600 * 1000 },
+				// 动物4：特级-奶蛙（图片系隐藏角色，成年状态，演示完整阶段图）
+				{
+					name: '奶蛙',
+					nickname: '奶蛙',
+					emoji: '👽',
+					stage: '成年',
+					growth: 0,
+					status: 'normal',
+					source: '特级',
+					isSpecialImage: true,
+					images: [
+						'/static/images/naiba_1.png',
+						'/static/images/naiba_2.png',
+						'/static/images/naiba_3.png',
+						'/static/images/naiba_4.png'
+					],
+					lastFeedTime: Date.now()
+				}
 			]);
 			// 3. 孵化队列：放入一枚特级蛋
 			uni.setStorageSync('eggsList', [

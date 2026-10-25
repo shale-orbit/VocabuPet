@@ -1,0 +1,112 @@
+[
+  {
+    "word": "migrate",
+    "translation": "迁移，移居",
+    "partOfSpeech": "v.",
+    "phonetic": "[maɪˈɡreɪt]",
+    "example": "These birds migrate south in winter.",
+    "exampleZh": "这些鸟在冬天迁移到南方。",
+    "extension": "migr(迁移) + ate(动词后缀) = 迁移",
+    "distractorsEn": ["remain", "settle"],
+    "distractorsZh": ["留下", "定居"]
+  },
+  {
+    "word": "jeopardy",
+    "translation": "危险，危难",
+    "partOfSpeech": "n.",
+    "phonetic": "[ˈdʒepədi]",
+    "example": "His career was in jeopardy.",
+    "exampleZh": "他的职业生涯处于危险之中。",
+    "extension": "jeo(游戏) + pardy(均等) = 势均力敌的游戏 = 危险",
+    "distractorsEn": ["safety", "security"],
+    "distractorsZh": ["安全", "保障"]
+  },
+  {
+    "word": "consensus",
+    "translation": "共识，一致意见",
+    "partOfSpeech": "n.",
+    "phonetic": "[kənˈsensəs]",
+    "example": "They reached a consensus on the plan.",
+    "exampleZh": "他们就这个计划达成了共识。",
+    "extension": "con(共同) + sens(感觉) + us = 共同感觉 = 共识",
+    "distractorsEn": ["dispute", "conflict"],
+    "distractorsZh": ["争议", "冲突"]
+  },
+  {
+    "word": "scrutiny",
+    "translation": "仔细审查，监视",
+    "partOfSpeech": "n.",
+    "phonetic": "[ˈskruːtəni]",
+    "example": "The plan came under close scrutiny.",
+    "exampleZh": "该计划受到了仔细审查。",
+    "extension": "scrut(检查) + iny = 仔细审查",
+    "distractorsEn": ["glance", "ignore"],
+    "distractorsZh": ["瞥见", "忽视"]
+  },
+  {
+    "word": "elusive",
+    "translation": "难以捉摸的，难找的",
+    "partOfSpeech": "adj.",
+    "phonetic": "[ɪˈluːsɪv]",
+    "example": "The answer proved elusive.",
+    "exampleZh": "事实证明答案难以捉摸。",
+    "extension": "elud(逃避) + ive = 逃避的 = 难以捉摸的",
+    "distractorsEn": ["obvious", "clear"],
+    "distractorsZh": ["明显的", "清晰的"]
+  },
+  {
+    "word": "prerequisite",
+    "translation": "先决条件，前提",
+    "partOfSpeech": "n.",
+    "phonetic": "[ˌpriːˈrekwəzɪt]",
+    "example": "Trust is a prerequisite for friendship.",
+    "exampleZh": "信任是友谊的先决条件。",
+    "extension": "pre(预先) + require(要求) + ite = 预先要求的 = 前提",
+    "distractorsEn": ["result", "outcome"],
+    "distractorsZh": ["结果", "后果"]
+  },
+  {
+    "word": "ambiguous",
+    "translation": "模棱两可的，含糊的",
+    "partOfSpeech": "adj.",
+    "phonetic": "[æmˈbɪɡjuəs]",
+    "example": "His answer was ambiguous.",
+    "exampleZh": "他的回答含糊其辞。",
+    "extension": "ambi(两边) + gu(走) + ous = 两边都走 = 模棱两可的",
+    "distractorsEn": ["clear", "definite"],
+    "distractorsZh": ["清晰的", "明确的"]
+  },
+  {
+    "word": "versatile",
+    "translation": "多才多艺的，多功能的",
+    "partOfSpeech": "adj.",
+    "phonetic": "[ˈvɜːsətaɪl]",
+    "example": "She is a versatile musician.",
+    "exampleZh": "她是一位多才多艺的音乐家。",
+    "extension": "vers(转) + atile = 能转向各方 = 多才多艺的",
+    "distractorsEn": ["limited", "narrow"],
+    "distractorsZh": ["有限的", "狭窄的"]
+  },
+  {
+    "word": "deteriorate",
+    "translation": "恶化，变坏",
+    "partOfSpeech": "v.",
+    "phonetic": "[dɪˈtɪəriəreɪt]",
+    "example": "His health deteriorated rapidly.",
+    "exampleZh": "他的健康状况迅速恶化。",
+    "extension": "deterior(糟糕的) + ate = 变糟糕 = 恶化",
+    "distractorsEn": ["improve", "recover"],
+    "distractorsZh": ["改善", "恢复"]
+  },
+  {
+    "word": "hierarchy",
+    "translation": "等级制度，层次结构",
+    "partOfSpeech": "n.",
+    "phonetic": "[ˈhaɪərɑːki]",
+    "example": "She climbed the corporate hierarchy.",
+    "exampleZh": "她攀上了公司的等级阶梯。",
+    "extension": "hier(神圣) + archy(统治) = 神圣统治 = 等级制度",
+    "distractorsEn": ["equality", "flatness"],
+    "distractorsZh": ["平等", "扁平"]
+  }
+]

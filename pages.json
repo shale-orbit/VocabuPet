@@ -23,6 +23,12 @@
 			"style": {
 				"navigationBarTitleText": "孵化"
 			}
+		},
+		{
+			"path": "pages/review/review",
+			"style": {
+				"navigationBarTitleText": "错词复习"
+			}
 		}
 	],
 	"globalStyle": {

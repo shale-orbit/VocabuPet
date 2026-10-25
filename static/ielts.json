@@ -1,0 +1,101 @@
+[
+  {
+    "word": "destructive",
+    "translation": "破坏性的",
+    "partOfSpeech": "adj.",
+    "phonetic": "[dɪˈstrʌktɪv]",
+    "example": "The destructive winds caused serious damage to the houses.",
+    "exampleZh": "这破坏力极强的风严重损坏了房屋。",
+    "extension": "de(向下)+struct(建造)+ive(形容词) = 破坏性的",
+    "distractorsEn": ["constructive", "protective"],
+    "distractorsZh": ["建设性的", "保护的"]
+  },
+  {
+    "word": "archaeology",
+    "translation": "考古学",
+    "partOfSpeech": "n.",
+    "phonetic": "[ˌɑːkiˈɒlədʒi]",
+    "example": "Archaeology requires careful analysis and patience.",
+    "exampleZh": "考古学研究需要细致的分析和耐心。",
+    "extension": "archaeo(古代)+logy(学科) = 考古学",
+    "distractorsEn": ["geology", "biology"],
+    "distractorsZh": ["地质学", "生物学"]
+  },
+  {
+    "word": "evaporation",
+    "translation": "蒸发",
+    "partOfSpeech": "n.",
+    "phonetic": "[ɪˌvæpəˈreɪʃn]",
+    "example": "A thin layer of fog lingers above the river due to evaporation of water.",
+    "exampleZh": "由于水分蒸发，河面上仍笼罩着一层薄雾。",
+    "extension": "e(出)+vapor(蒸汽)+ation(名词) = 蒸发",
+    "distractorsEn": ["condensation", "precipitation"],
+    "distractorsZh": ["凝结", "降水"]
+  },
+  {
+    "word": "incorporate",
+    "translation": "包含，合并",
+    "partOfSpeech": "v.",
+    "phonetic": "[ɪnˈkɔːpəreɪt]",
+    "example": "The app update incorporates many new features and improvements.",
+    "exampleZh": "应用更新引入了多项新功能和改进。",
+    "extension": "in(进入)+corpor(身体)+ate(动词) = 包含",
+    "distractorsEn": ["separate", "exclude"],
+    "distractorsZh": ["分离", "排除"]
+  },
+  {
+    "word": "astronomical",
+    "translation": "天文学的",
+    "partOfSpeech": "adj.",
+    "phonetic": "[ˌæstrəˈnɒmɪkl]",
+    "example": "Our telescope has made many important astronomical observations.",
+    "exampleZh": "我们的望远镜已经取得了许多重要的天文观测成果。",
+    "extension": "astro(星星)+nomical(学科的) = 天文学的",
+    "distractorsEn": ["geographical", "physical"],
+    "distractorsZh": ["地理的", "物理的"]
+  },
+  {
+    "word": "interpretation",
+    "translation": "解释",
+    "partOfSpeech": "n.",
+    "phonetic": "[ɪnˌtɜːprɪˈteɪʃn]",
+    "example": "The dictionary gives a clear interpretation to each word.",
+    "exampleZh": "词典对每个单词都给出了清晰的释义。",
+    "extension": "interpret(解释)+ation(名词后缀) = 解释",
+    "distractorsEn": ["translation", "confusion"],
+    "distractorsZh": ["翻译", "困惑"]
+  },
+  {
+    "word": "rehearsal",
+    "translation": "彩排",
+    "partOfSpeech": "n.",
+    "phonetic": "[rɪˈhɜːsl]",
+    "example": "We only had six days of rehearsal.",
+    "exampleZh": "我们只有六天的排练时间。",
+    "extension": "rehearse(排练)+al(名词) = 彩排",
+    "distractorsEn": ["performance", "practice"],
+    "distractorsZh": ["表演", "练习"]
+  },
+  {
+    "word": "deflate",
+    "translation": "打击，泄气",
+    "partOfSpeech": "v.",
+    "phonetic": "[dɪˈfleɪt]",
+    "example": "I hate to deflate your ego, but you seem to have an exaggerated idea of your importance to me.",
+    "exampleZh": "我不愿伤你的自尊，但是你好像高估了你对我的重要性。",
+    "extension": "de(向下)+flate(吹气) = 泄气/打击",
+    "distractorsEn": ["inflate", "encourage"],
+    "distractorsZh": ["膨胀", "鼓励"]
+  },
+  {
+    "word": "ellipsis",
+    "translation": "省略",
+    "partOfSpeech": "n.",
+    "phonetic": "[ɪˈlɪpsɪs]",
+    "example": "You no doubt noticed the ellipsis in the code above.",
+    "exampleZh": "您一定注意到上述代码中的省略号。",
+    "extension": "el(出)+lipsis(离开) = 省略",
+    "distractorsEn": ["addition", "emphasis"],
+    "distractorsZh": ["添加", "强调"]
+  }
+]
