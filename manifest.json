@@ -65,5 +65,13 @@
     "mp-toutiao" : {
         "usingComponents" : true
     },
-    "vueVersion" : "3"
+    "vueVersion" : "3",
+    /* H5 特有配置：部署到 GitHub Pages 子路径 /VocabuPet/ */
+    "h5" : {
+        "router" : {
+            "mode" : "hash",
+            "base" : "/VocabuPet/"
+        },
+        "publicPath" : "/VocabuPet/"
+    }
 }
